@@ -1,4 +1,4 @@
-const FormInput = ({label,name,type,defaultValue}) => {
+const FormInput = ({label,name,type,defaultValue, size}) => {
   return (
     
        
@@ -11,7 +11,7 @@ const FormInput = ({label,name,type,defaultValue}) => {
             name={name}
             defaultValue={defaultValue}
             placeholder='Type here'
-            className='input input-bordered'
+            className={`input input-bordered rounded-lg ${size}`}
           /> 
         </label>
        
