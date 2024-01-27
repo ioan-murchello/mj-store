@@ -3,7 +3,7 @@ import { useLoaderData, useNavigation } from "react-router-dom";
 import ProductsGrid from "./ProductsGrid";
 import ProductsList from "./ProductsList";
 import {BsFillGridFill, BsList} from 'react-icons/bs'
-import Loading from "./Loading";
+import Loading from "./Loading"; 
 
 const ProductsContainer = () => {
     const {meta} = useLoaderData()
@@ -44,9 +44,11 @@ const ProductsContainer = () => {
         </div>
       </div>
 
-      {loading && <Loading/>}
+      {loading && <Loading />}
       {totalProducts === 0 ? (
-        <h5>Sorry, no products matched your search...</h5>
+        <h5 className='text-xl mt-4'>
+          Sorry, no products matched your search...
+        </h5>
       ) : layout === 'grid' ? (
         <ProductsGrid />
       ) : (

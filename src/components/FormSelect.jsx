@@ -1,4 +1,4 @@
-const FormSelect = ({label, name, list, defaulValue, size}) => {
+const FormSelect = ({label, name, list, defaulValue, size}) => { 
   return (
     <div className="form-control">
         <label className="label" htmlFor={name}>
