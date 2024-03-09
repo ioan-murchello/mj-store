@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 
 const defaultValue = {
   cartItems: [],
@@ -30,6 +31,7 @@ const cartSlice = createSlice({
 
       //use reducer in another reducers
       cartSlice.caseReducers.calculateTotal(state);
+      toast.success('Item added successfuly')
     },
 
     clearCart: (state) => {
@@ -39,11 +41,14 @@ const cartSlice = createSlice({
 
     removeItem: (state, action) => {
       const { cartId } = action.payload;
-      const item = state.cartItems.finnd((i) => i.cartId === cartId);
+      const item = state.cartItems.find((i) => i.cartId === cartId);
       state.cartItems = state.cartItems.filter((el) => el.cartId !== cartId);
       state.numItemsInCart -= item.amount;
       state.cartTotal -= item.price * item.amount;
       cartSlice.caseReducers.calculateTotal(state);
+
+      toast.success('Item removed');
+
     },
 
     editItem: (state, action) => {
@@ -67,3 +72,5 @@ const cartSlice = createSlice({
 export const { addItem, clearCart, removeItem, editItem } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+

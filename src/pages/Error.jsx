@@ -1,8 +1,7 @@
 import { Link, useRouteError } from "react-router-dom"
 
 const Error = () => {
-  const error = useRouteError()
-  console.log(error)
+  const error = useRouteError() 
 
   if (error && error.status === 404) {
     return (
@@ -24,7 +23,7 @@ const Error = () => {
   }
   return (
      <main className="flex justify-center items-center flex-col space-y-4 min-h-screen">
-      <h3 className="text-3xl">There waw an error...</h3>
+      <h3 className="text-3xl">There was an error...</h3>
       <Link className="btn btn-primary capitalize" to='/'>back home</Link>
      </main>
   )

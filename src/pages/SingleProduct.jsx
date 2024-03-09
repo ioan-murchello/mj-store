@@ -6,17 +6,26 @@ import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { addItem } from "../features/cart/cartSlice"
 
-export const loader = async ({params}) => {
-  try {
-    const res = await customFetch(`/products/${params.id}`)
-    if(res.status !== 200){
-      throw new Error('Could not fetch item details')
-    }
-    return {product: res.data.data}
-  } catch (error) {
-    console.log(error)
+const singleProductQuery = id => {
+  return {
+    queryKey:['singleProduct', id],
+    queryFn: () => customFetch(`/products/${id}`)
   }
 }
+
+export const loader =
+  (queryClient) =>
+  async ({ params }) => {
+    try {
+      const res = await queryClient.ensureQueryData(singleProductQuery(params.id));
+      if (res.status !== 200) {
+        throw new Error('Could not fetch item details');
+      }
+      return { product: res.data.data };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
 const SingleProduct = () => {
   const {product} = useLoaderData()

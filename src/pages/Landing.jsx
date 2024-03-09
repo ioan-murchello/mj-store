@@ -4,15 +4,23 @@ import {FeaturedProducts} from '../components/index'
 
 const url = '/products?featured=true';
 
-export const loader = async () => {
+const featuredProductsQuery = {
+  queryKey: ['featuredProducts'],
+  queryFn: () => {
+    return customFetch(url)
+  }
+}
+
+export const loader = (queryClient) => async () => {
   try {
-    const res = await customFetch(url);
+    const res = await queryClient.ensureQueryData(featuredProductsQuery);
 
     if (!res.status === 200) {
       throw new Error('Some error');
     }
 
     return {products: res.data.data};
+    
   } catch (error) {
     throw new Error(error);
   }

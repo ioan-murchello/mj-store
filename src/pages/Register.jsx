@@ -1,7 +1,45 @@
-import { Form, Link } from "react-router-dom";
-import { FormInput, SubmitBtn } from "../components/index";
+import { Form, Link, redirect, useNavigate } from 'react-router-dom';
+import { FormInput, SubmitBtn } from '../components/index';
+import { customFetch } from '../utils';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../features/user/userSlice';
 
-const Register = () => {
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+
+  try {
+    const res = await customFetch.post('/auth/local/register', data);
+    toast.success('account created successfuly')
+    return redirect('/login');
+  } catch (error) {
+    const errorMessage = error?.responce?.data?.error?.message || 'please double check your credentials'
+    toast.error(errorMessage) 
+  }
+
+  return null;
+};
+
+const Register = (e) => {
+ 
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const loginAsGuestUser = async () => {
+    try {
+      const res = await customFetch.post('/auth/local', {
+        identifier: 'test@test.com',
+        password: 'secret',
+      });
+      navigate('/');
+      dispatch(loginUser(res.data));
+      toast.success(`Welcome Guest User`);
+    } catch (error) {
+      toast.error('Guest User login error.Please try again');
+    }
+  };
+ 
   return (
     <section className='h-screen grid place-items-center'>
       <Form
@@ -13,13 +51,13 @@ const Register = () => {
           label='Your Name'
           name='name'
           type='text'
-          defaultValue='Jhon Jhonson'
+          defaultValue='james333 smith'
         />
         <FormInput
           label='Email'
           name='email'
           type='email'
-          defaultValue='test@test.com'
+          defaultValue='james333@gmail.com'
         />
         <FormInput
           label='Password'
@@ -31,7 +69,12 @@ const Register = () => {
         <div className='mt-4 grid place-items-center'>
           <SubmitBtn text='Register' />
         </div>
-        <button className='btn btn-secondary btn-block capitalize'>
+        <button
+          className='btn btn-secondary btn-block capitalize'
+          onClick={e => {
+            e.preventDefault() 
+            loginAsGuestUser()}}
+        >
           Guest User
         </button>
         <p className='text-center'>
@@ -43,5 +86,5 @@ const Register = () => {
       </Form>
     </section>
   );
-}
-export default Register
+};
+export default Register;
