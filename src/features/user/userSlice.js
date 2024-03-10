@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
 
 const themes = {
-  corporate: 'corporate',
-  dim: 'dim',
+  light: 'light',
+  dark: 'dark',
 };
 
 const getThemeFromLocalStorage = () => {
@@ -37,8 +37,8 @@ const userSlice = createSlice({
       toast.success('You logged out successfuly')
     },
     toggleTheme: (state) => {
-      const {corporate, dim} = themes
-      state.theme = state.theme === corporate ? dim : corporate
+      const {light, dark} = themes
+      state.theme = state.theme === light ? dark : light;
       document.documentElement.setAttribute('data-theme', state.theme)
       localStorage.setItem('theme', state.theme)
     },
