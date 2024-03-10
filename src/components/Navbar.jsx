@@ -14,8 +14,6 @@ const Navbar = () => {
     dispatch(toggleTheme())  
   };
 
-  
-
   const itemsInCart = useSelector(state => state.cartState.numItemsInCart)
 
   return (
