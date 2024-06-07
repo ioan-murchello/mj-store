@@ -1,23 +1,27 @@
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 let index = 0;
 
+function chunkArray(array, chunkSize) {
+  const chunks = [];
+  for (let i = 0; i < array.length; i += chunkSize) {
+    chunks.push(array.slice(i, i + chunkSize));
+  }
+  return chunks;
+}
+
 const ComplexPaginationContainer = () => {
   const { meta } = useLoaderData();
-  const { page, pageCount } = meta.pagination;
+  const { page, pageCount } = meta.pagination; 
   const pages = Array.from({ length: pageCount }, (_, index) => index + 1);
 
-  function chunkArray(array, chunkSize) {
-    const chunks = [];
-    for (let i = 0; i < array.length; i += chunkSize) {
-      chunks.push(array.slice(i, i + chunkSize));
-    }
-    return chunks;
+  if(page === 1){
+    index = 0
   }
 
   const subarrays = chunkArray(pages, 7);
-  let [currentPage, setCurrentPage] = useState(page);
+  let [currentPage, setCurrentPage] = useState(page); 
 
   const { search, pathname } = useLocation();
   const navigate = useNavigate();
@@ -52,6 +56,10 @@ const ComplexPaginationContainer = () => {
     }
   };
 
+  // useEffect(() => {
+  //   handlePage(currentPage);
+  // }, [page]);
+
   return (
     <div className='mt-16 flex justify-end'>
       <div className='join'>
@@ -66,7 +74,7 @@ const ComplexPaginationContainer = () => {
       {subarrays[index].map((n) => (
         <button
           className={`btn btn-xs sm:btn-md ${
-            currentPage === n ? 'bg-slate-100' : ''
+            currentPage === n ? 'bg-neutral-600' : ''
           }`}
           key={n}
           onClick={() => handlePage(n)}

@@ -8,10 +8,10 @@ const CartItem = ({ cartItem }) => {
   const removeItemFromCart = () => {
     dispatch(removeItem({ cartId }));
   };
-  
+
   const editItemInCart = (e) => {
-    dispatch(editItem({cartId, amount: parseInt(e.target.value)}))
-  }
+    dispatch(editItem({ cartId, amount: parseInt(e.target.value) }));
+  };
 
   const { cartId, title, price, image, amount, company, productColor } =
     cartItem;
@@ -51,7 +51,10 @@ const CartItem = ({ cartItem }) => {
           >
             {generateAmountOptions(5)}
           </select>
-          <button className='mt-2 link link-primary link-hover text-sm' onClick={removeItemFromCart}>
+          <button
+            className='mt-2 link link-primary link-hover text-sm'
+            onClick={removeItemFromCart}
+          >
             remove
           </button>
         </div>

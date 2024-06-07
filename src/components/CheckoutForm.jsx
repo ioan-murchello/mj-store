@@ -10,8 +10,7 @@ export const action =
   async ({ request }) => {
     const formData = await request.formData();
     const { name, address } = Object.fromEntries(formData);
-    const user = store.getState().userState.user;
-    console.log(user, 'user');
+    const user = store.getState().userState.user; 
     const { cartItems, orderTotal, numItemsInCart } =
       store.getState().cartState;
 

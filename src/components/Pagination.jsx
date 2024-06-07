@@ -44,7 +44,7 @@ const Pagination = () => {
           <button
             key={pageNumber}
             className={`btn btn-xs sm:btn-md join-item ${
-              page === pageNumber ? 'bordered bg-base-300' : ''
+              page === pageNumber ? 'bordered bg-base-500' : ''
             }`}
             onClick={() => handlePage(pageNumber)}
           >
